@@ -100,19 +100,43 @@ I updated the plan file. Please take my changes and comments into consideration 
 Bu projede AWS AI-DLC metodolojisini uyguluyoruz. Önce aidlc-docs klasörünü, prompts.md dosyasını ve aidlc-docs/plans altındaki planları oku. Nerede kaldığımızı özetle. Sıradaki adım github_deployment_plan.md planının onaylanıp uygulanması. Henüz hiçbir şey uygulama, sadece özetle.
 ```
 
-### 5.2 Plan approval and execution
+### 5.2 Continue session
+```
+claude --continue
+```
+
+### 5.3 Plan approval and execution
 ```
 I updated the plan file. Please take my changes and comments into consideration then follow the plan as specified. All 4 questions are answered in the "Decisions" section of github_deployment_plan.md.
 ```
 
-### 5.3 Repository creation (Step 6 – run manually after auto-mode permission block)
+### 5.4 Repository creation (Step 6 – sent as a prompt without `!`; Claude Code took it as approval and ran it after the auto-mode permission block)
 ```
 "/c/Program Files/GitHub CLI/gh.exe" repo create job-app-aidlc --public --source=. --remote=origin
 ```
 
-### 5.4 Documentation – fill prompts.md
+### 5.5 Upgrade workflow to Node 22
+```
+Workflow'daki Node sürümünü 22'ye yükselt, plan dosyasında da güncelle. Commit, push et ve workflow'un başarılı olduğunu doğrula.
+```
+
+### 5.6 Documentation – fill prompts.md
 ```
 prompts.md içindeki TODO bölümünü doldur. Workshop promptlarını sırasıyla ekle; her plandan sonra "I updated the plan file..." onay cümlesini gönderdiğimi de belirt. Workshop'taki Step 5 (AWS CDK) yerine GitHub Actions/Pages kullandığımızı not düş. Sonra commit ve push et.
+```
+
+### 5.7 Review manually updated prompts.md
+```
+prompts.md dosyasını manuel güncelledim. Kontrol et, commit ve push yap, workflow'un başarılı olduğunu doğrula.
+```
+
+### 5.8 Fix prompts.md gaps and add requirements folder
+```
+Evet, üç eksiği de düzelt:
+1. prompts.md bölüm 5'e bu oturumdaki eksik promptları sırasıyla ekle (claude --continue, Node 22 yükseltme, prompts.md güncelleme ve bu prompt).
+2. 5.3 başlığını düzelt: komut ! olmadan prompt olarak gönderildi ve Claude Code onay olarak alıp çalıştırdı.
+3. aidlc-docs/requirements klasörünü oluştur. Setup promptunun gerektirdiği bu klasör boş kalmasın; içine user stories ve deployment kararlarına referans veren kısa bir README.md koy.
+Sonra commit, push et ve workflow'un başarılı olduğunu doğrula.
 ```
 
 ---
