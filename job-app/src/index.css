@@ -1,0 +1,45 @@
+:root {
+  --primary-teal: #009688;
+  --secondary-dark: #263238;
+  --accent-orange: #ff9800;
+  --bg-light: #f5f7fa;
+}
+
+body {
+  background-color: var(--bg-light);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar {
+  background-color: var(--secondary-dark) !important;
+}
+
+.text-teal {
+  color: var(--primary-teal);
+}
+
+.btn-primary {
+  background-color: var(--primary-teal);
+  border-color: var(--primary-teal);
+}
+
+.btn-primary:hover {
+  background-color: #00796b;
+  border-color: #00796b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.job-card {
+  transition: all 0.3s ease;
+  border-left: 4px solid var(--primary-teal);
+  background-color: #ffffff;
+  border-radius: 8px;
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
