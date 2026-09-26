@@ -1,92 +1,92 @@
 # Job Application Site – AI-DLC Workshop
 
-🔗 **Canlı site:** https://warlock54.github.io/job-app-aidlc/
+🔗 **Live site:** https://warlock54.github.io/job-app-aidlc/
 
-İş ilanlarını arama, görüntüleme ve başvuru yapma imkânı sunan bir iş başvuru sitesi. Proje, **AWS AI-DLC (AI-Driven Development Life Cycle)** metodolojisiyle, yapay zeka asistanı (Claude Code) kullanılarak fikirden canlı siteye kadar uçtan uca geliştirildi.
+A job application site where applicants can search, view, and apply to job postings. The project was built end to end, from intent to production, using the **AWS AI-DLC (AI-Driven Development Life Cycle)** methodology with an AI assistant (Claude Code).
 
-## Teknolojiler
+## Tech Stack
 
-| Alan | Kullanılan |
+| Area | Used |
 |---|---|
-| Uygulama | React 18, Vite 5, React Router (HashRouter) |
-| Arayüz | Bootstrap 5 (CDN), Bootstrap Icons, özel tema (teal / koyu gri / turuncu) |
-| Veri & Auth | Mock servisler (50+ örnek ilan, localStorage tabanlı oturum) |
-| Test | Vitest 3.2.7, React Testing Library, jsdom |
+| Application | React 18, Vite 5, React Router (HashRouter) |
+| UI | Bootstrap 5 (CDN), Bootstrap Icons, custom theme (teal / dark gray / orange) |
+| Data & Auth | Mock services (50+ sample jobs, localStorage-based session) |
+| Testing | Vitest 3.2.7, React Testing Library, jsdom |
 | CI/CD | GitHub Actions → GitHub Pages |
-| Araçlar | Git, GitHub CLI, Claude Code |
+| Tooling | Git, GitHub CLI, Claude Code |
 
-## AI-DLC Süreci
+## AI-DLC Process
 
-Her aşama aynı döngüyle ilerledi: **AI plan yazar → plan incelenir ve kararlar eklenir → onay → AI adım adım uygular ve adımları işaretler.** Tüm planlar `aidlc-docs/plans/`, tüm promptlar `aidlc-docs/prompts.md` içinde kayıtlı.
+Every stage followed the same cycle: **the AI writes a plan → the plan is reviewed and decisions are added → approval → the AI executes it step by step and checks off each step.** All plans are in `aidlc-docs/plans/`, and all prompts are recorded in order in `aidlc-docs/prompts.md`.
 
-| # | Aşama | Plan | Çıktı |
+| # | Stage | Plan | Output |
 |---|---|---|---|
-| 0 | Setup | – | `aidlc-docs/` klasör yapısı |
-| 1 | Inception – User Stories | `user_stories_plan.md` | `story-artifacts/user_stories.md` (2 persona, 4 story, 11 kabul kriteri) |
+| 0 | Setup | – | `aidlc-docs/` folder structure |
+| 1 | Inception – User Stories | `user_stories_plan.md` | `story-artifacts/user_stories.md` (2 personas, 4 stories, 11 acceptance criteria) |
 | 2 | Inception – Units | `units_plan.md` | `design-artifacts/units.md` (Identity & Access, Job Catalog & Discovery, Application Management) |
 | 3 | Construction – Component Model | `component_model_plan.md` | `design-artifacts/component_model.md` |
-| 4 | Construction – Code Generation | `react_app_plan.md` | `job-app/` React uygulaması |
+| 4 | Construction – Code Generation | `react_app_plan.md` | `job-app/` React application |
 | 5 | Operations – Deployment | `github_deployment_plan.md` | `.github/workflows/deploy.yml`, GitHub Pages |
 | 6 | QA – Acceptance Testing | `test_plan.md` | `design-artifacts/traceability_matrix.md`, `job-app/src/__tests__/` |
 
-> **Workshop'tan sapma:** Orijinal workshop Step 5'te AWS CDK (S3 + CloudFront) kullanıyor. Bu projede ücretsiz olduğu ve hazır CI/CD sunduğu için **GitHub Actions + GitHub Pages** tercih edildi.
+> **Deviation from the workshop:** The original workshop Step 5 deploys with AWS CDK (S3 + CloudFront). This project uses **GitHub Actions + GitHub Pages** instead, because it is free and provides CI/CD out of the box.
 
-## Test Süreci
+## Testing Process
 
-### Amaç
-Build'in başarılı olması ve sitenin HTTP 200 dönmesi, özelliklerin doğru çalıştığını kanıtlamaz. Bu yüzden `user_stories.md` içindeki **her kabul kriteri için bir otomatik test** yazıldı. Testler uygulamanın mevcut davranışına göre değil, **kriter metnine birebir uyacak şekilde** yazıldı.
+### Goal
+A successful build and an HTTP 200 response do not prove that features work correctly. So **one automated test was written for every acceptance criterion** in `user_stories.md`. The tests were written to match **the criterion text as written**, not the app's current behavior.
 
-### Yöntem
-- Her test gerçek `App` bileşenini render eder ve kullanıcı gibi arayüz üzerinden etkileşir (tıklama, yazma).
-- Her kriter bir teste, her test bir bileşene bağlandı. Bu eşleme `aidlc-docs/design-artifacts/traceability_matrix.md` dosyasında tutuluyor.
-- Testler build paketine dahil değil, canlı site etkilenmiyor.
+### Method
+- Each test renders the real `App` component and interacts with it through the UI like a user (clicking, typing).
+- Each criterion maps to one test, and each test maps to a component. This mapping is kept in `aidlc-docs/design-artifacts/traceability_matrix.md`.
+- Tests are not included in the production bundle; the live site is unaffected.
 
-### Sonuç: 9 / 11 geçti
+### Result: 9 / 11 passed
 
-| Story | Kabul kriteri | Sonuç |
+| Story | Acceptance criterion | Result |
 |---|---|---|
-| 1. İş arama & filtreleme | AC-1.1 Anahtar kelimeyle arama | ✅ Geçti (not: submit yerine anlık filtreleme) |
-| | AC-1.2 Kategoriye göre filtreleme | ✅ Geçti |
-| | AC-1.3 Sonuç yoksa mesaj | ✅ Geçti |
-| 2. İş detayı | AC-2.1 Detay sayfasına gitme | ✅ Geçti (not: tüm kart tıklanabilir) |
-| | AC-2.2 Detay içeriği | ✅ Geçti |
-| 3. Başvuru | AC-3.1 Başvuru formu | ❌ Kaldı |
-| | AC-3.2 Form gönderiminde başarı mesajı | ❌ Kaldı |
-| | AC-3.3 Misafir kullanıcıya giriş uyarısı | ✅ Geçti |
-| 4. Kimlik doğrulama | AC-4.1 Giriş | ✅ Geçti |
-| | AC-4.2 Kayıt | ⚠️ Şartlı geçti |
-| | AC-4.3 Çıkış | ✅ Geçti |
+| 1. Job search & filtering | AC-1.1 Search by keyword | ✅ Pass (note: live filtering instead of submit) |
+| | AC-1.2 Filter by category | ✅ Pass |
+| | AC-1.3 Message when no results | ✅ Pass |
+| 2. Job details | AC-2.1 Navigate to details page | ✅ Pass (note: the whole card is clickable) |
+| | AC-2.2 Details content | ✅ Pass |
+| 3. Apply | AC-3.1 Application form | ❌ Fail |
+| | AC-3.2 Success message on form submission | ❌ Fail |
+| | AC-3.3 Login prompt for guest users | ✅ Pass |
+| 4. Authentication | AC-4.1 Login | ✅ Pass |
+| | AC-4.2 Registration | ⚠️ Conditional pass |
+| | AC-4.3 Logout | ✅ Pass |
 
-### Bilinen eksikler (bilinçli olarak bırakıldı)
-- **AC-3.1 / AC-3.2:** Başvuru formu yok. Giriş yapmış kullanıcı "Apply Now"a basınca doğrudan başarı mesajı görüyor. `component_model.md`'de tasarlanan Application Component ve Application Service koda dönüştürülmemiş. Test süreci tasarım ile uygulama arasındaki bu boşluğu ortaya çıkardı.
-- **AC-4.2:** Ayrı bir kayıt sayfası yok. Tek bir "Login / Register" formu var ve mock auth her e-posta/şifreyi kabul ediyor. Bu, Step 4'te bilinçli olarak verilmiş bir karar.
-- **Erişilebilirlik:** Giriş formundaki etiketler input alanlarına bağlı değil.
-- **CI test kapısı:** `npm test` adımı henüz `deploy.yml`'a eklenmedi. Kalan iki kriter yüzünden eklenirse her deploy engellenirdi.
+### Known gaps (intentionally left as is)
+- **AC-3.1 / AC-3.2:** There is no application form. A logged-in user who clicks "Apply Now" sees a success message immediately. The Application Component and Application Service designed in `component_model.md` were never implemented. The testing process exposed this gap between design and implementation.
+- **AC-4.2:** There is no separate registration page. A single "Login / Register" form exists, and the mock auth accepts any email/password. This was a deliberate decision made in Step 4.
+- **Accessibility:** Labels in the login form are not associated with their input fields.
+- **CI test gate:** The `npm test` step has not been added to `deploy.yml` yet. With the two failing criteria, adding it would block every deployment.
 
-Düzeltme önerisi (`applicationService.js` + `ApplicationForm.jsx`) izlenebilirlik matrisinde kayıtlı, ileride ayrı bir plan–onay döngüsüyle uygulanabilir.
+A proposed fix (`applicationService.js` + `ApplicationForm.jsx`) is recorded in the traceability matrix and can be implemented later through a separate plan–approval cycle.
 
-## Yerelde Çalıştırma
+## Running Locally
 
 ```bash
 cd job-app
 npm ci
-npm run build   # üretim build'i (dist/)
-npm test        # kabul kriteri testleri
+npm run build   # production build (dist/)
+npm test        # acceptance criteria tests
 ```
 
-## Dağıtım
+## Deployment
 
-`main` dalına yapılan her push, GitHub Actions ile otomatik olarak build edilir ve GitHub Pages'e yayınlanır. Durum için repodaki **Actions** sekmesine bakabilirsiniz.
+Every push to the `main` branch is automatically built by GitHub Actions and published to GitHub Pages. Check the **Actions** tab in the repository for status.
 
-## Proje Yapısı
+## Project Structure
 
 ```
-├── .github/workflows/deploy.yml   # CI/CD hattı
+├── .github/workflows/deploy.yml   # CI/CD pipeline
 ├── aidlc-docs/
-│   ├── prompts.md                 # Tüm promptlar, sırasıyla
-│   ├── plans/                     # Her aşamanın plan dosyası
+│   ├── prompts.md                 # All prompts, in order
+│   ├── plans/                     # Plan file for each stage
 │   ├── requirements/
 │   ├── story-artifacts/           # User stories
 │   └── design-artifacts/          # Units, component model, traceability matrix
-└── job-app/                       # React + Vite uygulaması ve testleri
+└── job-app/                       # React + Vite app and its tests
 ```
