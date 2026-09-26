@@ -141,4 +141,23 @@ Sonra commit, push et ve workflow'un başarılı olduğunu doğrula.
 
 ---
 
+## 6. Construction – QA / Acceptance Criteria Verification
+
+```
+Your Role: You are an experienced QA engineer. Before you start the task below, plan your work in aidlc-docs/plans/test_plan.md with checkboxes for each step. List your Deliverables. If any step needs my clarification, add a note to get my confirmation. Do not make critical decisions on your own. After my approval, execute the plan one step at a time and mark checkboxes as done.
+
+Your Task: Verify that every acceptance criterion in aidlc-docs/story-artifacts/user_stories.md is actually satisfied by the job-app.
+- Create a traceability matrix (story → acceptance criterion → test case) in aidlc-docs/design-artifacts/traceability_matrix.md
+- Write automated tests with Vitest + React Testing Library in job-app, one test per acceptance criterion
+- Run the tests and report which criteria pass and which fail. Do not fix the app code without my approval.
+- Propose (do not apply yet) adding a test step to .github/workflows/deploy.yml so deployment is blocked if tests fail
+```
+
+**Approval (after reviewing `test_plan.md`; answers recorded in its "Decisions" section):**
+```
+I updated the plan file. Please take my changes and comments into consideration then follow the plan as specified.
+```
+
+---
+
 **Result:** Live site → https://warlock54.github.io/job-app-aidlc/
