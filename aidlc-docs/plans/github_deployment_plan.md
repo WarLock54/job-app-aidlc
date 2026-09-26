@@ -29,7 +29,7 @@ Publish the Job Application React (Vite) project to a GitHub repository and esta
   - Trigger: `push` to `main` + `workflow_dispatch`.
   - Permissions: `contents: read`, `pages: write`, `id-token: write`.
   - Concurrency group `pages`, cancel-in-progress: false.
-  - Build job: `actions/checkout`, `actions/setup-node` (Node 20, npm cache with `cache-dependency-path: job-app/package-lock.json`), `npm ci` + `npm run build` with `working-directory: job-app`, `actions/configure-pages`, `actions/upload-pages-artifact` with `path: job-app/dist`.
+  - Build job: `actions/checkout`, `actions/setup-node` (Node 22, npm cache with `cache-dependency-path: job-app/package-lock.json`), `npm ci` + `npm run build` with `working-directory: job-app`, `actions/configure-pages`, `actions/upload-pages-artifact` with `path: job-app/dist`.
   - Deploy job: `actions/deploy-pages`, environment `github-pages`.
   - Use current major versions of all actions.
 
