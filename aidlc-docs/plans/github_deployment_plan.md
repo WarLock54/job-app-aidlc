@@ -12,19 +12,19 @@ Publish the Job Application React (Vite) project to a GitHub repository and esta
 - **Workflow location:** repo root `.github/workflows/deploy.yml` (GitHub ignores workflows in subfolders). Build runs with `working-directory: job-app`.
 
 ## Steps
-- [ ] **Step 1: Pre-flight Checks**
+- [x] **Step 1: Pre-flight Checks**
   - Run `git --version`, `gh --version`, `gh auth status` and confirm all succeed.
   - Get the GitHub username: `gh api user --jq .login`.
   - Verify the app builds locally: `npm ci` and `npm run build` inside `job-app/`.
   - If any check fails, stop and report to me.
 
-- [ ] **Step 2: Add .gitignore**
+- [x] **Step 2: Add .gitignore**
   - Create `.gitignore` at the repo root with at least: `node_modules/`, `dist/`, `.env`, `*.log`, `.DS_Store`.
 
-- [ ] **Step 3: Verify Vite Configuration**
+- [x] **Step 3: Verify Vite Configuration**
   - Confirm `job-app/vite.config.js` has `base: './'` and the app uses HashRouter. No change unless something is broken.
 
-- [ ] **Step 4: Create GitHub Actions Workflow**
+- [x] **Step 4: Create GitHub Actions Workflow**
   - Create `.github/workflows/deploy.yml` at the **repo root**.
   - Trigger: `push` to `main` + `workflow_dispatch`.
   - Permissions: `contents: read`, `pages: write`, `id-token: write`.
@@ -33,31 +33,31 @@ Publish the Job Application React (Vite) project to a GitHub repository and esta
   - Deploy job: `actions/deploy-pages`, environment `github-pages`.
   - Use current major versions of all actions.
 
-- [ ] **Step 5: Git Init & First Commit**
+- [x] **Step 5: Git Init & First Commit**
   - `git init -b main`
   - `git add .` then check `git status`. Make sure `node_modules/` and `dist/` are NOT staged.
   - `git commit -m "Initial commit: AI-DLC job application site with GitHub Pages CI/CD"`
 
-- [ ] **Step 6: Create GitHub Repository (without pushing yet)**
+- [x] **Step 6: Create GitHub Repository (without pushing yet)**
   - `gh repo create job-app-aidlc --public --source=. --remote=origin`
   - If the repo name already exists, stop and ask me for a new name.
 
-- [ ] **Step 7: Enable GitHub Pages (Source: GitHub Actions)**
+- [x] **Step 7: Enable GitHub Pages (Source: GitHub Actions)**
   - `gh api -X POST repos/<username>/job-app-aidlc/pages -f build_type=workflow`
   - If Pages already exists, use `-X PUT` instead.
   - Verify: `gh api repos/<username>/job-app-aidlc/pages`.
 
-- [ ] **Step 8: Push & Monitor Deployment**
+- [x] **Step 8: Push & Monitor Deployment**
   - `git push -u origin main`
   - Watch the workflow: `gh run list --limit 1` then `gh run watch <run-id>`.
   - Keep me updated with the status. If it fails, show the logs (`gh run view <run-id> --log-failed`), fix, commit, push again.
 
-- [ ] **Step 9: Verify the Live Site**
+- [x] **Step 9: Verify the Live Site**
   - Site URL: `https://<username>.github.io/job-app-aidlc/`
   - Verify with `curl -I <URL>` (expect HTTP 200) and check that the returned HTML references the built JS/CSS assets.
   - Report the final URL to me.
 
-- [ ] **Step 10: Documentation Housekeeping**
+- [x] **Step 10: Documentation Housekeeping**
   - Mark completed steps as `[x]` in ALL previous plan files (user_stories, units, component_model, react_app).
   - Remove the stray prompt line at the end of `user_stories_plan.md`.
   - Fix unit numbering mismatch between `units_plan.md` and `units.md`.
