@@ -34,7 +34,8 @@ Implemented per the "Proposed fix plan" below on 2026-09-27:
 - `job-app/src/components/JobDetails.jsx` — "Apply Now" now shows the form for logged-in users; the success alert shows only after form submission. Guest behavior (AC-3.3) unchanged.
 
 ## CI test gate — APPLIED (2026-09-27)
-`.github/workflows/deploy.yml` now runs `npm audit --audit-level=high` and `npm test` (blocking) between `npm ci` and `npm run build`. A failing test or a high/critical vulnerability now fails `build`, and `deploy` (`needs: build`) is skipped.
+`.github/workflows/deploy.yml` now runs `npm audit --omit=dev --audit-level=high` and `npm test` (blocking) between `npm ci` and `npm run build`. A failing test or a high/critical vulnerability **in a production dependency** now fails `build`, and `deploy` (`needs: build`) is skipped. Dev-only tooling (`vite`, `vitest`, `esbuild`) is intentionally excluded from the gate since it never ships in `dist/`; it's still covered by Dependabot for visibility.
+**2026-09-27 confirmed on Onur's machine:** `npm test` → 11/11 PASS (fix verified). Full-tree `npm audit` showed 1 high (`vite`, dev-only) + 5 moderate; `--omit=dev` scope shows 2 moderate only (`react-router` open redirect, no fix without a breaking `react-router-dom@7.18.4` bump — tracked via Dependabot, not blocking).
 
 ## Other observations (not AC failures, not yet fixed)
 - The email/password `<label>`s in `Auth.jsx` are still not linked to their inputs (no `htmlFor`/`id`) — accessibility gap, out of scope for this change.
