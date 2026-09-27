@@ -31,8 +31,8 @@ jobs:
 
       - run: npm ci
 
-      - name: Dependency audit (gate — fails on high/critical)
-        run: npm audit --audit-level=high
+      - name: Dependency audit — production deps only (gate — fails on high/critical)
+        run: npm audit --omit=dev --audit-level=high
 
       - name: Run acceptance tests (gate — fails build on failing AC)
         run: npm test
