@@ -1,5 +1,7 @@
 # Plan: Deployment - Deploy with Firebase Hosting
 
+> **Status: NOT CANONICAL / NOT IMPLEMENTED.** 
+
 ## Objective
 Deploy the Single Page Application (SPA) to Firebase Hosting using the Firebase CLI for instant global CDN distribution.
 
@@ -16,3 +18,8 @@ Deploy the Single Page Application (SPA) to Firebase Hosting using the Firebase 
 - [ ] **Step 4: Deploy**
   - Execute `firebase deploy`.
   - Verify the live application using the provided `web.app` or `firebaseapp.com` Hosting URL.
+
+## Production Hardening Notes
+- [ ] Firebase servis hesabı JSON key'i koda/repoya asla commit edilmez; CI kullanılacaksa GitHub Secrets + OIDC destekli action tercih edilir.
+- [ ] `firebase.json`'da security header'lar (`X-Content-Type-Options`, `X-Frame-Options`) tanımlanmalı.
+- [ ] Proje ileride Firestore/Realtime DB gibi servisler eklerse, varsayılan açık security rule'larla prod'a çıkılmaz (şu an sadece Hosting kullanıldığı için N/A, hatırlatma amaçlı).

@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { jobsData } from '../services/mockData';
+import { applicationService } from '../services/applicationService';
+import ApplicationForm from './ApplicationForm';
 
 export default function JobDetails({ user }) {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [applied, setApplied] = useState(false);
-  
+  const [stage, setStage] = useState('idle'); // 'idle' | 'form' | 'success'
+
   const job = jobsData.find(j => j.id === id);
 
   if (!job) return <div className="container mt-5"><h2>Job not found</h2></div>;
 
-  const handleApply = () => {
+  const handleApplyClick = () => {
     if (!user) {
       alert("Please login first to apply for this job.");
       navigate('/auth');
     } else {
-      setApplied(true);
+      setStage('form');
     }
+  };
+
+  const handleSubmitApplication = (formData) => {
+    applicationService.submitApplication(job.id, user.email, formData);
+    setStage('success');
   };
 
   return (
@@ -32,10 +39,18 @@ export default function JobDetails({ user }) {
           <p className="lead fs-6">{job.description}</p>
           <p><strong>Date Posted:</strong> {job.postedDate}</p>
           <div className="mt-5">
-            {applied ? (
+            {stage === 'success' && (
               <div className="alert alert-success"><i className="bi bi-check-circle"></i> Application Submitted Successfully!</div>
-            ) : (
-              <button className="btn btn-primary btn-lg px-5" onClick={handleApply}>Apply Now</button>
+            )}
+            {stage === 'idle' && (
+              <button className="btn btn-primary btn-lg px-5" onClick={handleApplyClick}>Apply Now</button>
+            )}
+            {stage === 'form' && (
+              <ApplicationForm
+                applicantEmail={user.email}
+                onCancel={() => setStage('idle')}
+                onSubmit={handleSubmitApplication}
+              />
             )}
           </div>
         </div>

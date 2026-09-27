@@ -1,3 +1,9 @@
+/**
+ * ⚠️ MOCK AUTH SERVICE — NOT PRODUCTION READY.
+ * Herhangi bir email/şifre kombinasyonunu kabul eder, sunucu tarafı
+ * doğrulama/token yoktur, oturum localStorage'da tutulur.
+ * Gerçek kullanıcı verisi işlenmeden önce bkz. aidlc-docs/SECURITY_POLICY.md.
+ */
 export const authService = {
   login: (email, password) => {
     const user = { email, role: 'Applicant' };

@@ -43,10 +43,15 @@ Verify that every acceptance criterion (AC) in `aidlc-docs/story-artifacts/user_
   - Run `npm test`, record PASS/FAIL per AC in the matrix, and summarize with the reason for each failure.
   - Do NOT change app code. Failures are reported only.
   - Confirm `npm run build` still works.
-
+  
 - [x] **Step 6: Propose CI test gate (not applied)**
   - Add the proposed `deploy.yml` change as a diff in the matrix/report: a `- run: npm test` step in the `build` job, after `npm ci` and before `npm run build`. A failing test then fails `build`, and `deploy` (which `needs: build`) is skipped.
   - **Note:** if tests for AC-3.1/3.2 fail and the gate is applied as is, every deploy will be blocked until the app is fixed or the ACs are changed.
+
+> **Update (uygulandı):** CI test gate `.github/workflows/deploy.yml`'e eklendi (ayrıca `npm audit --audit-level=high` gate'i eklendi). AC-3.1 ve AC-3.2 hâlâ FAIL olduğundan, **bu değişiklikten sonraki her `main` push'u build aşamasında başarısız olacak ve deploy çalışmayacaktır.** Bu, eksik olan başvuru formu özelliğini gizlemek yerine pipeline üzerinden görünür kılmak için bilinçli bir tercihtir. Deploy'ların tekrar geçebilmesi için:
+> (a) `ApplicationForm.jsx` + `applicationService.js` implement edilmeli (traceability matrix'teki önerilen çözüm), veya
+> (b) AC-3.1/3.2 metinleri gözden geçirilip onaylanmalı (ve testler buna göre güncellenmeli).
+> Aksi halde site **son başarılı build'de donmuş** kalır, yeni değişiklikler yayınlanmaz.
 
 - [x] **Step 7: Record prompt and commit**
   - Record this prompt and your approval prompt in `aidlc-docs/prompts.md`.
